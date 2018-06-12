@@ -1716,6 +1716,9 @@
 					"Get": {
 						"Arguments": [{"Type": "int"}]
 					}
+				},
+				"Shapes": {
+					"Get": {"Return": "*Shapes"}
 				}
 			},
 			"Method": {
@@ -1881,6 +1884,47 @@
 					"Arguments": [{"Type": "interface{}", "Variable": true}]
 				},
 				"Select": {}
+			}
+		},
+		"Shapes": {
+			"Property": {
+				"Count": {
+					"Get": {"Return": "int"}
+				},
+				"Creator": {
+					"Get": {"Return": "int"}
+				},
+				"Range": {
+					"Get": {
+						"Arguments": [
+							{"Type": "interface{}", "TypeCheck": ["int", "string", "*ShapeRange"]},
+							{"Type": "interface{}", "Variable": true, "Maximum": 1, "TypeCheck": ["int", "string", "*ShapeRange"]}
+						],
+						"Return": "*ShapeRange"
+					}
+				}
+			}
+		},
+		"ShapeRange": {
+			"Property": {
+				"TextFrame2": {
+					"Get": {"Return": "*TextFrame2"}
+				}
+			}
+		},
+		"TextFrame2": {
+			"Property": {
+				"TextRange": {
+					"Get": {"Return": "*TextRange2"}
+				}
+			}
+		},
+		"TextRange2": {
+			"Property": {
+				"Text": {
+					"Get": {"Return": "string"},
+					"Set": {"Arguments": [{"Type": "string"}]}
+				}
 			}
 		},
 		"ChartObjects": {
