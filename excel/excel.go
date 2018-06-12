@@ -1639,6 +1639,18 @@ type Series struct {
 type SeriesCollection struct {
 	Excel
 }
+type ShapeRange struct {
+	Excel
+}
+type Shapes struct {
+	Excel
+}
+type TextFrame2 struct {
+	Excel
+}
+type TextRange2 struct {
+	Excel
+}
 type Window struct {
 	Excel
 }
@@ -2854,6 +2866,66 @@ func (a *SeriesCollection) NewSeries() *Series {
 		Excel: a.Merge(a.Obj.CallMethod("NewSeries")),
 	}
 }
+func (a *ShapeRange) GetTextFrame2() *TextFrame2 {
+	return &TextFrame2{
+		Excel: a.Merge(a.Obj.GetProperty("TextFrame2")),
+	}
+}
+func (a *Shapes) GetCount() int {
+	v, err := a.Obj.GetProperty("Count")
+	a.Merge(v, err)
+	return (int)(v.Val)
+}
+func (a *Shapes) GetCreator() int {
+	v, err := a.Obj.GetProperty("Creator")
+	a.Merge(v, err)
+	return (int)(v.Val)
+}
+func (a *Shapes) GetRange(a0 interface{}, a1 ...interface{}) *ShapeRange {
+	av := make([]interface{}, 0, 4)
+	switch a0.(type) {
+	case int:
+		av = append(av, a0)
+	case string:
+		av = append(av, a0)
+	case *ShapeRange:
+		av = append(av, (a0.(*ShapeRange)).Obj)
+	default:
+		panic("Shapes.GetRange : a0 : type given for the argument is different")
+	}
+	if len(a1) > 1 {
+		panic("Shapes.GetRange : a1 : number of arguments is greater than 1")
+	}
+	for _, it := range a1 {
+		switch it.(type) {
+		case int:
+			av = append(av, it)
+		case string:
+			av = append(av, it)
+		case *ShapeRange:
+			av = append(av, (it.(*ShapeRange)).Obj)
+		default:
+			panic("Shapes.GetRange : a1 : type given for the argument is different")
+		}
+	}
+	return &ShapeRange{
+		Excel: a.Merge(a.Obj.GetProperty("Range", av...)),
+	}
+}
+func (a *TextFrame2) GetTextRange() *TextRange2 {
+	return &TextRange2{
+		Excel: a.Merge(a.Obj.GetProperty("TextRange")),
+	}
+}
+func (a *TextRange2) GetText() string {
+	v, err := a.Obj.GetProperty("Text")
+	a.Merge(v, err)
+	return ToString(v, err)
+}
+func (a *TextRange2) SetText(a0 string) {
+	v, err := a.Obj.PutProperty("Text", a0)
+	a.Merge(v, err)
+}
 func (a *Window) GetWindowState() int {
 	v, err := a.Obj.GetProperty("WindowState")
 	a.Merge(v, err)
@@ -3079,6 +3151,11 @@ func (a *Worksheet) GetRange(a0 interface{}, a1 ...interface{}) *Range {
 func (a *Worksheet) GetRows() *Range {
 	return &Range{
 		Excel: a.Merge(a.Obj.GetProperty("Rows")),
+	}
+}
+func (a *Worksheet) GetShapes() *Shapes {
+	return &Shapes{
+		Excel: a.Merge(a.Obj.GetProperty("Shapes")),
 	}
 }
 func (a *Worksheet) GetVisible(a0 int) {
